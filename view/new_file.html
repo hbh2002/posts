@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>文章发布</title>
+		<!--引入资源-->
+		<link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css" />
+		<script src="js/jquery-2.1.0.js"></script>
+		<script src="js/timeHandling.js"></script>
+		<script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+		<style type="text/css">
+			.box{
+				width:auto;
+				min-width:60px;
+				max-width:200px;
+				text-align:center;
+				line-height:20px;
+				display:inline-block !important;
+				display:inline;
+				padding:8px 8px;
+				border-radius:4px;
+				border:1px solid #DDDDDD;
+				position:absolute;
+				left:50%;
+				top:300px;
+				background-color:#FFFFFF;
+				box-shadow:0px 0px 2px 0px #A1A3A6;
+				font-size:14px;
+				color:#333;
+			}
+			textarea{
+				height:200px !important;
+			}
+			.title_style{
+				padding:4px 10px;
+				color: #c3c3c3;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<%- include("header.html") %>
+			<form action="/renewal/<%= data[0]._id %>" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="title_ifo">标题</label>
+					<input type="text" class="form-control" name="title_ifo" id="title_ifo" value="<%= data[0].title_ifo %>" placeholder="标题">
+				</div>
+				<div class="form-group">
+					<label for="content">内容</label>
+					<textarea class="form-control" name="content" id="content" rows="3" placeholder="内容"><%= data[0].content %></textarea>
+				</div>
+				<div class="form-group">
+					<div>
+						<span class="text-info">原缩略图</span>
+						<img src="" style="height:260px;" class="img-rounded"/>
+					</div>
+					<label for="thumb">修改缩略图</label>
+					<input type="file" name="thumb" id="thumb">
+				</div>
+				<div class="form-group">
+					<label for="thumb">缩略图</label>
+					<input type="file" name="thumb" id="thumb">
+				</div>
+				<div class="form-group">
+					<label for="writer">作者</label>
+					<input type="text" class="form-control" name="writer" id="writer" value="<%= data[0].writer %>" placeholder="作者">
+				</div>
+				<input type="submit" class="btn btn-danger form-control" value="修改" />
+			</form>
+		</div>
+		<script type="text/javascript">
+			$(function() {
+				$("form").on("submit", function(event) {
+					//获取所有输入框
+					var inpAll = $('input,textarea').not(':last,[type:file]');
+					for(var i = 0; i < inpAll.length; i++) {
+						if(!Boolean($(inpAll[i]).val())) {
+							show('信息输入不完整，无法发布！',2500);
+							event.preventDefault();
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>
